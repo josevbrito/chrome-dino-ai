@@ -1,6 +1,6 @@
-# Recriando o T-Rex Game (Chrome Dino) com Inteligência Artificial em Python
+# Recriando o (T-Rex Game) Chrome Dino e usando Inteligência Artificial em Python para jogá-lo
 
-Este projeto tem como objetivo recriar o famoso jogo do dinossauro do Chrome (T-Rex Game) e implementar uma inteligência artificial (IA) para jogar automaticamente.
+Este projeto tem como objetivo recriar o famoso jogo do dinossauro do Chrome e implementar uma inteligência artificial para jogar automaticamente.
 
 ## Descrição
 
