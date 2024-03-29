@@ -9,8 +9,8 @@ pygame.init()
 # GLOBAL CONSTANTS
 
 # Screen
-SCREEN_HEIGTH = 600
-SCREEN_WIDTH = 1100
+SCREEN_HEIGTH = 650
+SCREEN_WIDTH = 1200
 SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGTH))
 
 # Dinosaur Movement
@@ -54,6 +54,7 @@ PTERODACTYL = [
 FONT = pygame.font.Font('freesansbold.ttf', 20)
 
 
+# CLASSES
 
 # Dinosaur
 class Dinosaur:
@@ -177,6 +178,7 @@ def remove(index):
 
 # Main
 def main():
+    # Initialization of necessary variables and objects to start the game
     global game_speed, x_pos_bg, y_pos_bg, points, obstacles, dinosaurs
     clock = pygame.time.Clock()
     points = 0
@@ -189,14 +191,16 @@ def main():
     y_pos_bg = 380
     game_speed = 20
 
+    # Function to update the game score and increase speed as needed
     def score():
         global points, game_speed
         points += 1
         if points % 100 == 0:
             game_speed += 1
         text = FONT.render(f'Points: {str(points)}', True, (0, 0, 0))
-        SCREEN.blit(text, (950, 50))
+        SCREEN.blit(text, (1050, 50))
 
+    # Function to draw and scroll the game background 
     def background():
         global x_pos_bg, y_pos_bg
         image_width = BG[0].get_width()
@@ -206,6 +210,7 @@ def main():
             x_pos_bg = 0
         x_pos_bg -= game_speed
 
+    # Main game loop
     run = True
     while run:
         for event in pygame.event.get():
@@ -219,9 +224,11 @@ def main():
             dinosaur.update()
             dinosaur.draw(SCREEN)
         
+        # Check if there are no dinosaurs left
         if len(dinosaurs) == 0:
             break
 
+        # Generate obstacles if there are none
         if len(obstacles) == 0:
             rand_int = random.randint(0, 2)
             if rand_int == 0:
@@ -238,8 +245,10 @@ def main():
                 if dinosaur.rect.colliderect(obstacle.rect):
                     remove(i)
 
+        # Get user input
         user_input = pygame.key.get_pressed()
 
+        # Handle dinosaur actions based on user input
         for i, dinosaur in enumerate(dinosaurs):
             if (user_input[pygame.K_SPACE] or user_input[pygame.K_UP]) and not dinosaur.dino_jump:
                 dinosaur.dino_jump = True
@@ -254,11 +263,13 @@ def main():
                 dinosaur.dino_run = True
                 dinosaur.dino_jump = False 
 
+        # Draw and update the cloud, score, and background
         cloud.draw(SCREEN)
         cloud.update()
         score()
         background()
         clock.tick(30)
         pygame.display.update()
+
 
 main()
