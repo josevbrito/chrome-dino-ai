@@ -181,7 +181,7 @@ class Pterodactyl(Obstacle):
         self.index += 1
 
 def runSimulation(genomes, config):
-    global game_speed, x_pos_bg, y_pos_bg, points, obstacles
+    global game_speed, x_pos_bg, y_pos_bg, points, obstacles, high_score
 
     pygame.init()
     SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -195,20 +195,49 @@ def runSimulation(genomes, config):
     font = pygame.font.Font('freesansbold.ttf', 20)
     obstacles = []
     death_count = 0
+    high_score = 0 
 
     nets = []
-    dinosaurs = []
+    dinosaurs = [] 
+    
+    def save_high_score(high_score):
+        with open('high_score.txt', 'w') as file:
+            file.write(str(high_score))
+
+    def load_high_score():
+        try:
+            with open('high_score.txt', 'r') as file:
+                return int(file.read())
+        except FileNotFoundError:
+            return 0
+
+    high_score = load_high_score() 
 
     def score():
-        global points, game_speed
+        global points, game_speed, high_score
         points += 1
         if points % 50 == 0:
             game_speed += 1
+
+        if points > high_score:
+            high_score = points
+            save_high_score(high_score)
 
         text = font.render("Points: " + str(points), True, (0, 0, 0))
         textRect = text.get_rect()
         textRect.center = (1000, 40)
         SCREEN.blit(text, textRect)
+
+        text = alive_font.render("Died: " + str(died), True, (0, 0, 0))
+        text_rect = text.get_rect()
+        text_rect.center = (900, 530)
+        SCREEN.blit(text, text_rect)
+
+        text = alive_font.render("High Score: " + str(high_score), True, (0, 0, 0))
+        text_rect = text.get_rect()
+        text_rect.center = (900, 570) 
+        SCREEN.blit(text, text_rect)
+
 
     def background():
         global x_pos_bg, y_pos_bg
