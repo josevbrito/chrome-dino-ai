@@ -1,0 +1,27 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  #interface {
+    display: flex;
+    height: 100vh;
+  }
+  
+  #left-panel {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+  }
+  
+  #left-panel canvas {
+    flex: 1;
+    border: 1px solid #ccc;
+  }
+  
+  #game-canvas {
+    width: 70%;
+    background-color: #fff;
+  }
+  
